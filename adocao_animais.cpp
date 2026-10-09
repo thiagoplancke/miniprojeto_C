@@ -9,13 +9,52 @@ typedef struct{
 	int adotado; //1 Sim / 0 não
 } Pet;
 
-void adicionarAnimal(Pet*, int*);
+void adicionarAnimal(Pet**, int*, int*);
 
 int main(){
+	int op;
+	int qtd = 0;
+	int tam = 1;
+	Pet *lista;
 	
+	lista = (Pet *) malloc(tam* sizeof(Pet));
+	if (lista == NULL) {
+	    printf("Erro: Não foi possível alocar memória inicial!\n");
+	    return 1;
+	}
+	
+	while(1){
+		printf("\n--- MENU DE PETS ---\n");
+        printf("1. Adicionar Pet\n");
+        printf("2. Consultar Pet\n");
+        printf("3. Alterar Idade ou condicao\n");
+        printf("4. Relatorio\n");
+        printf("5. Sair\n");
+        printf("Digite o numero de uma opcao: ");
+				
+		scanf("%i",&op);
+		
+		switch (op) {
+            case 1:
+        
+                adicionarAnimal(&lista, &qtd, &tam);
+                break;
+            case 5:
+                free(lista);
+                printf("Encerrando o programa... Ate logo!\n");
+                return 0; 
+            default:
+                printf("Opcao invalida! Tente novamente.\n");
+                break;
+        }
+		
+		
+	}
 	
 	
 }
+
+
 void adicionarAnimal(Pet **vetor ,int *qtd, int *tamanho){
 	if(*qtd == *tamanho){
 		(*tamanho) *= 2;
