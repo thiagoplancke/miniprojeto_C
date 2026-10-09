@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct{
 	int id;
@@ -10,6 +11,8 @@ typedef struct{
 } Pet;
 
 void adicionarAnimal(Pet**, int*, int*);
+void consultarAnimal(Pet*, int);
+
 
 int main(){
 	int op;
@@ -39,6 +42,9 @@ int main(){
         
                 adicionarAnimal(&lista, &qtd, &tam);
                 break;
+            case 2:
+            	consultarAnimal(lista, qtd);
+            	break;
             case 5:
                 free(lista);
                 printf("Encerrando o programa... Ate logo!\n");
@@ -86,5 +92,55 @@ void adicionarAnimal(Pet **vetor ,int *qtd, int *tamanho){
     (*vetor)[*qtd].adotado = 0;
     
     (*qtd) ++;
-}	
+}
+
+
+void consultarAnimal(Pet *vetor, int qtd){
+	int op2;
+	printf("Voce quer consultar animais por ID ou especie?\n\n ID digite 1 \n Especie digite 2 \n\n");
+	scanf("%i",&op2);
+	switch(op2){
+		case 1:
+			{
+				
+				int id;
+	    		printf("Digite o ID do animal: ");
+				scanf("%i",&id);
+				for(int i = 0;i<=qtd;i++){
+					if(vetor[i].id == id){
+						printf("\n ID: %i \n Nome: %s \n Especie: %s \n Idade: %i \n Adotado: %i",vetor[i].id,vetor[i].nome,vetor[i].especie,vetor[i].idade,vetor[i].adotado );
+						break;
+				}			
+			}
+			break;	
+			}
+			
+		
+		case 2:
+			{
+				
+				char esp[20];
+				printf("Digite a especie de animal que deseja consultar: ");
+				scanf("%s", esp);
+				for(int i = 0;i<=qtd;i++){
+					if (strcmp(vetor[i].especie, esp) == 0) {
+						printf("\n____________________\n ID: %i \n Nome: %s \n Especie: %s \n Idade: %i \n Adotado: %i",vetor[i].id,vetor[i].nome,vetor[i].especie,vetor[i].idade,vetor[i].adotado );
+	
+						}
+				}
+				break;	
+			}
+			
+			
+	
+		default:
+			printf("Digite um numero valido!");
+			break;		
+	}
+	
+	
+}
+
+
+	
 	
