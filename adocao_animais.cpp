@@ -12,6 +12,9 @@ typedef struct{
 
 void adicionarAnimal(Pet**, int*, int*);
 void consultarAnimal(Pet*, int);
+void alterarInfo(Pet*, int);
+void gerarRelatorio(Pet*r,int);
+
 
 
 int main(){
@@ -22,7 +25,7 @@ int main(){
 	
 	lista = (Pet *) malloc(tam* sizeof(Pet));
 	if (lista == NULL) {
-	    printf("Erro: Não foi possível alocar memória inicial!\n");
+	    printf("\nErro: Não foi possível alocar memória inicial!\n");
 	    return 1;
 	}
 	
@@ -45,12 +48,24 @@ int main(){
             case 2:
             	consultarAnimal(lista, qtd);
             	break;
+            
+            case 3:
+            	alterarInfo(lista,qtd);
+            	break;
+            	
+            case 4:
+            	gerarRelatorio(lista,qtd);
+            	break;
+            	
+            	
+            	
+
             case 5:
                 free(lista);
-                printf("Encerrando o programa... Ate logo!\n");
+                printf("\n Encerrando o programa... Ate logo!\n");
                 return 0; 
             default:
-                printf("Opcao invalida! Tente novamente.\n");
+                printf("\n Opcao invalida! Tente novamente.\n");
                 break;
         }
 		
@@ -67,7 +82,7 @@ void adicionarAnimal(Pet **vetor ,int *qtd, int *tamanho){
 		
 		Pet *temp = (Pet *) realloc(*vetor, (*tamanho) * sizeof(Pet));
 		if (temp == NULL) {
-            printf("Erro ao realocar memória! Não foi possível adicionar mais pets.\n");
+            printf("\nErro ao realocar memória! Não foi possível adicionar mais pets.\n");
             *tamanho /= 2; 
             return;
         }
@@ -97,16 +112,16 @@ void adicionarAnimal(Pet **vetor ,int *qtd, int *tamanho){
 
 void consultarAnimal(Pet *vetor, int qtd){
 	int op2;
-	printf("Voce quer consultar animais por ID ou especie?\n\n ID digite 1 \n Especie digite 2 \n\n");
+	printf("\n Voce quer consultar animais por ID ou especie?\n\n ID digite 1 \n Especie digite 2 \n\n");
 	scanf("%i",&op2);
 	switch(op2){
 		case 1:
 			{
 				
 				int id;
-	    		printf("Digite o ID do animal: ");
+	    		printf("\n Digite o ID do animal: ");
 				scanf("%i",&id);
-				for(int i = 0;i<=qtd;i++){
+				for(int i = 0;i<qtd;i++){
 					if(vetor[i].id == id){
 						printf("\n ID: %i \n Nome: %s \n Especie: %s \n Idade: %i \n Adotado: %i",vetor[i].id,vetor[i].nome,vetor[i].especie,vetor[i].idade,vetor[i].adotado );
 						break;
@@ -120,9 +135,9 @@ void consultarAnimal(Pet *vetor, int qtd){
 			{
 				
 				char esp[20];
-				printf("Digite a especie de animal que deseja consultar: ");
+				printf("\n Digite a especie de animal que deseja consultar: ");
 				scanf("%s", esp);
-				for(int i = 0;i<=qtd;i++){
+				for(int i = 0;i<qtd;i++){
 					if (strcmp(vetor[i].especie, esp) == 0) {
 						printf("\n____________________\n ID: %i \n Nome: %s \n Especie: %s \n Idade: %i \n Adotado: %i",vetor[i].id,vetor[i].nome,vetor[i].especie,vetor[i].idade,vetor[i].adotado );
 	
@@ -134,12 +149,62 @@ void consultarAnimal(Pet *vetor, int qtd){
 			
 	
 		default:
-			printf("Digite um numero valido!");
+			printf("\n Digite um numero valido!");
 			break;		
 	}
 	
 	
 }
+
+void alterarInfo(Pet *vetor, int qtd){
+	int id;
+	printf("\n Digite o ID do animal que voce deseja alterar: ");
+	scanf("%i",&id);
+	for(int i = 0;i<qtd;i++){
+		if(vetor[i].id == id){
+			int op3;
+			printf("\n 1.alterar condicao para adotado \n 2.alterar idade");
+			scanf("%i",&op3);
+			switch(op3){
+				case 1:
+					vetor[i].adotado = 1;
+					break;
+				case 2:
+					int idade;
+					printf("\nDigite a nova idade do animal: ");
+					scanf("%i",&idade);
+					vetor[i].idade = idade;
+					break;
+				default:
+					printf("\nDigite um numero valido!");
+					break;	
+			}
+			break;
+			}
+			
+		
+	}			
+}
+
+void gerarRelatorio(Pet *vetor, int qtd){
+	int total = 0;
+	
+	for(int i = 0; i < qtd; i++){
+		if(vetor[i].adotado == 1){
+			
+			printf("\n____________________\n ID: %i \n Nome: %s \n Especie: %s \n Idade: %i \n Adotado: %i",vetor[i].id,vetor[i].nome,vetor[i].especie,vetor[i].idade,vetor[i].adotado );
+
+			total ++;
+		}
+	}
+	
+	printf("\nTotal de adotados: %i",total);
+	
+	
+}
+
+	
+
 
 
 	
